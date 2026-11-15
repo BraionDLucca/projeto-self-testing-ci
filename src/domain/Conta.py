@@ -15,4 +15,7 @@ class Conta():
             if valor > self.saldo:
                 raise ValueError("Saldo insuficiente.")
             else:
-                self.saldo = self.saldo - valor            
+                self.saldo = self.saldo - valor
+
+    def receber(self, valor:float):
+        self.saldo += valor
