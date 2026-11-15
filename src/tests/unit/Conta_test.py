@@ -30,3 +30,8 @@ def test_transferencia_credito_sucesso(conta, valor):
 def test_transferencia_credito_falha(conta):
     with pytest.raises(ValueError):
         conta.transferir(500.01, "CREDITO")
+
+def test_recebimento_sucesso(conta):
+    saldo_antes = conta.saldo
+    conta.receber(100)
+    assert conta.saldo == saldo_antes + 100
