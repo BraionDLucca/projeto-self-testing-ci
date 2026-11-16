@@ -31,14 +31,14 @@ a branch `main` como branch principal.
 
 Serão utilizadas **feature branches** para desenvolver novas
 funcionalidades de forma isolada. Após a conclusão do desenvolvimento,
-as alterações deverão ser integradas à branch principal por meio de Pull
-Requests.
+as alterações deverão ser integradas à branch de integração (**develop**) por meio de **Pull
+Requests** para então, após aprovadas, serem integradas à branch principal também por meio de Pull Requests.
 
-A pipeline de Integração Contínua (CI), configurada no GitHub Actions,
-será executada automaticamente nos seguintes eventos da branch `main`:
+A pipeline de Integração Contínua (CI), configurada no **GitHub Actions**,
+será executada automaticamente nos seguintes eventos da branch `main` e `develop`:
 
 -   **Pull Request:** execução da pipeline para validar as alterações
     propostas antes da integração.
 -   **Push:** execução da pipeline quando houver alterações enviadas
-    diretamente à branch `main`, incluindo integrações realizadas após a
+    diretamente à branch `main` ou `develop`, incluindo integrações realizadas após a
     aprovação dos Pull Requests.
