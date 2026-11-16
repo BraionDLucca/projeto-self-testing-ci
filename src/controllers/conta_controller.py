@@ -6,6 +6,11 @@ router = APIRouter()
 conta_service = ContaService()
 
 
+@router.get("/")
+def home():
+    return "API funcionando na porta 8000!"
+
+
 @router.post("/contas")
 def criar_conta(dados: CriarContaRequest):
     try:
