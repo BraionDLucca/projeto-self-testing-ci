@@ -8,23 +8,21 @@ digitais, transferências de saldo e consulta de extratos.
 
 ## 2. Requisitos funcionais
 
-| Identificador | Descrição                                                                                                                          |   |   |   |   |   |   |   |   |
-|---------------|------------------------------------------------------------------------------------------------------------------------------------|---|---|---|---|---|---|---|---|
-| RF01          | O sistema deve permitir a criação de contas com valor de saldo inicial.                                                            |   |   |   |   |   |   |   |   |
-| RF02          | O sistema deve permitir a consulta de contas.                                                                                      |   |   |   |   |   |   |   |   |
-| RF03          | O sistema deve permitir a transferência de saldo entre contas, creditando na conta de destino o valor debitado da conta de origem. |   |   |   |   |   |   |   |   |
-| RF04          | O sistema deve impedir transferências quando o saldo for insuficiente.                                                             |   |   |   |   |   |   |   |   |
-| RF05          | O sistema deve impedir que o saldo de débito seja negativo, sendo o valor mínimo igual a zero.                                     |   |   |   |   |   |   |   |   |
-| RF06          | O sistema deve permitir a consulta de extratos de uma conta, com filtros por data e tipo de transação (débito ou crédito).         |   |   |   |   |   |   |   |   |
-|
+| Identificador | Descrição                                                                                                                          |
+|---------------|------------------------------------------------------------------------------------------------------------------------------------|
+| RF01          | O sistema deve permitir a criação de contas com valor de saldo inicial.                                                            |
+| RF02          | O sistema deve permitir a consulta de contas.                                                                                      |
+| RF03          | O sistema deve permitir a transferência de saldo entre contas, creditando na conta de destino o valor debitado da conta de origem. |
+| RF04          | O sistema deve impedir transferências quando o saldo for insuficiente.                                                             |
+| RF05          | O sistema deve impedir que o saldo de débito seja negativo, sendo o valor mínimo igual a zero.                                     |
+| RF06          | O sistema deve permitir a consulta de extratos de uma conta, com filtros por data e tipo de transação (débito ou crédito).         |
 
 ## 3. Requisitos não funcionais
 
-| Identificador | Descrição                                                                                                         |   |   |   |   |   |   |   |   |
-|---------------|-------------------------------------------------------------------------------------------------------------------|---|---|---|---|---|---|---|---|
-| RNF01         | Em transações concorrentes, o sistema deve garantir que apenas uma transação realize leitura ou escrita de dados. |   |   |   |   |   |   |   |   |
-| RNF02         | O sistema deve responder em até 1 segundo para até 50 requisições simultâneas.                                    |   |   |   |   |   |   |   |   |
-|               |                                                                                                                   
+| Identificador | Descrição                                                                                                         |
+|---------------|-------------------------------------------------------------------------------------------------------------------|
+| RNF01         | Em transações concorrentes, o sistema deve garantir que apenas uma transação realize leitura ou escrita de dados. |
+| RNF02         | O sistema deve responder em até 1 segundo para até 50 requisições simultâneas.                                    |
 
 ## 4. Estratégia de branching e integração contínua
 
