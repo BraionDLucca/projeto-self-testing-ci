@@ -1,9 +1,9 @@
 from unittest.mock import patch
-from controllers.conta_controller import criar_conta
+from controllers import conta_controller
 from schemas.conta_schema import CriarContaRequest
 
 
-def test_criar_conta_sucesso():
+def test_controller_criar_conta_sucesso():
     with patch(
         "controllers.conta_controller.conta_service"
     ) as conta_service_mock:
@@ -16,7 +16,7 @@ def test_criar_conta_sucesso():
 
         dados = CriarContaRequest(saldo=80.50, limite=500.00)
 
-        resultado = criar_conta(dados)
+        resultado = conta_controller.criar_conta(dados)
 
         assert resultado["id"] == 1
         assert resultado["saldo"] == 80.50
