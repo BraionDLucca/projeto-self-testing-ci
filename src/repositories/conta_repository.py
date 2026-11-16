@@ -1,0 +1,2 @@
+def salvar(conta):
+    pass
