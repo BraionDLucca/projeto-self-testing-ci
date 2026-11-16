@@ -1,12 +1,6 @@
 from domain.Conta import Conta
 import pytest
 
-import sys
-from pathlib import Path
-
-src = Path(__file__).resolve().parent.parent.parent
-sys.path.append(str(src))
-
 
 @pytest.fixture
 def conta():
