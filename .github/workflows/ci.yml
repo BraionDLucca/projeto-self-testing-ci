@@ -25,15 +25,27 @@ jobs:
         with:
           python-version: '3.13'
 
-      - name: Install Flake8
-        run: pip install flake8
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
       - name: Run Flake8
         run: flake8 .
 
   tests:
-      name: Pytest
-      runs-on: ubuntu-latest
-      steps:
-        - name: Run Pytest
-          run: pytest
+    name: Pytest
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Pytest
+        run: pytest
