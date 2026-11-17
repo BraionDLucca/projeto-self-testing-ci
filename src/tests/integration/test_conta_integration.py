@@ -1,6 +1,7 @@
 import pytest
 from unittest.mock import patch
 from services import conta_service
+from integration.conftest import obter_conexao_teste
 
 
 def test_buscar_por_id_sucesso(test_db):
@@ -30,3 +31,21 @@ def test_buscar_por_id_conta_nao_encontrada(test_db):
             conta_service.buscar_por_id(999)
 
     assert str(erro.value) == "Conta não encontrada."
+
+
+def test_criar_conta_e_verificar_no_banco(test_db):
+    with patch(
+        "repositories.conta_repository.obter_conexao",
+        side_effect=obter_conexao_teste
+    ):
+        conta_service.criar_conta(80.50, 500.00)
+
+    cursor = test_db.execute(
+        "SELECT * FROM contas WHERE id = 1"
+    )
+
+    resultado = cursor.fetchone()
+
+    assert resultado["id"] == 1
+    assert resultado["saldo"] == 80.50
+    assert resultado["limite"] == 500.00
