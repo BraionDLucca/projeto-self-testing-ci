@@ -30,17 +30,14 @@ def test_service_criar_conta_sucesso():
 
 @pytest.mark.parametrize("saldo", [(0), (-0.01)])
 def test_service_criar_conta_falha_saldo(saldo):
-        dados = Conta(saldo, 500.00)
+    dados = Conta(saldo, 500.00)
 
-        with pytest.raises(ValueError):
-             conta_service.criar_conta(dados.saldo, dados.limite)
+    with pytest.raises(ValueError):
+        conta_service.criar_conta(dados.saldo, dados.limite)
 
 
 def test_service_criar_conta_falha_limite():
-        dados = Conta(50, -0.01)
+    dados = Conta(50, -0.01)
 
-        with pytest.raises(ValueError):
-             conta_service.criar_conta(dados.saldo, dados.limite)
-
-# def test_criar_conta_com_saldo_inicial_falha(conta):
-#     conta_controller.criar_conta(Conta(0, 0))
+    with pytest.raises(ValueError):
+        conta_service.criar_conta(dados.saldo, dados.limite)

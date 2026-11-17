@@ -8,7 +8,7 @@ def criar_conta(saldo: float, limite: float):
             )
 
     if limite < 0:
-            raise ValueError("Limite não pode ser negativo.")
+        raise ValueError("Limite não pode ser negativo.")
 
     conta = {"saldo": saldo, "limite": limite}
 
