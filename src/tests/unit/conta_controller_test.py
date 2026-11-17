@@ -77,3 +77,21 @@ def test_controller_buscar_conta_por_id_sucesso():
         assert resultado["limite"] == 500.00
 
         conta_service_mock.buscar_por_id.assert_called_once_with(1)
+
+
+def test_controller_buscar_conta_por_id_nao_encontrada():
+    with patch(
+        "controllers.conta_controller.conta_service"
+    ) as conta_service_mock:
+
+        conta_service_mock.buscar_por_id.side_effect = ValueError(
+            "Conta não encontrada."
+        )
+
+        with pytest.raises(HTTPException) as erro:
+            conta_controller.buscar_conta_por_id(999)
+
+        assert erro.value.status_code == 404
+        assert erro.value.detail == "Conta não encontrada."
+
+        conta_service_mock.buscar_por_id.assert_called_once_with(999)
