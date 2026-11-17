@@ -43,6 +43,24 @@ def test_service_criar_conta_falha_limite():
         conta_service.criar_conta(dados.saldo, dados.limite)
 
 
+def test_buscar_por_id_sucesso():
+    with patch(
+        "services.conta_service.conta_repository"
+    ) as conta_repository_mock:
+
+        conta_repository_mock.buscar_por_id.return_value = (
+            1, 80.50, 500.00
+        )
+
+        resultado = conta_service.buscar_por_id(1)
+
+        assert resultado["id"] == 1
+        assert resultado["saldo"] == 80.50
+        assert resultado["limite"] == 500.00
+
+        conta_repository_mock.buscar_por_id.assert_called_once_with(1)
+
+
 @pytest.mark.parametrize(("valor"), [(10), (5)])
 def test_service_transferencia_debito_sucesso(valor):
     conta_origem = Conta(100.00, 500.00)
