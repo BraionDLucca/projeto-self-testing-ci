@@ -15,8 +15,19 @@ def criar_conta(saldo: float, limite: float):
 
     return conta_repository.salvar(conta)
 
+
 def buscar_por_id(id):
-    pass
+    conta = conta_repository.buscar_por_id(id)
+
+    if conta is None:
+        raise ValueError("Conta não encontrada.")
+
+    return {
+        "id": conta[0],
+        "saldo": conta[1],
+        "limite": conta[2]
+    }
+
 
 def transferir(id_conta_origem, id_conta_destino, metodo, valor):
 
