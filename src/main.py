@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-import uvicorn, os
+import uvicorn
+import os
 from dotenv import load_dotenv
 from controllers.conta_controller import router
 from database.conexao import inicializar_banco
