@@ -7,6 +7,9 @@ def criar_conta(saldo: float, limite: float):
             "Contas precisam de saldo acima de 0 (zero) para serem criadas."
             )
 
+    if limite < 0:
+            raise ValueError("Limite não pode ser negativo.")
+
     conta = {"saldo": saldo, "limite": limite}
 
     return conta_repository.salvar(conta)
