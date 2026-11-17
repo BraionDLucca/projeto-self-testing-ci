@@ -1,5 +1,5 @@
 from domain.Conta import Conta
-from unittest.mock import patch
+from unittest.mock import patch, call
 from services import conta_service
 import pytest
 
@@ -41,3 +41,91 @@ def test_service_criar_conta_falha_limite():
 
     with pytest.raises(ValueError):
         conta_service.criar_conta(dados.saldo, dados.limite)
+
+
+@pytest.mark.parametrize(("valor"), [(10), (5)])
+def test_service_transferencia_debito_sucesso(valor):
+    conta_origem = Conta(100.00, 500.00)
+    conta_destino = Conta(200.00, 1000.00)
+
+    with patch(
+        "services.conta_service.conta_repository"
+    ) as conta_repository_mock:
+
+        conta_repository_mock.buscar_por_id.side_effect = [
+            {
+                "id": 1,
+                "saldo": conta_origem.saldo,
+                "limite": conta_origem.limite
+            },
+            {
+                "id": 2,
+                "saldo": conta_destino.saldo,
+                "limite": conta_destino.limite
+            }
+        ]
+
+        resultado = conta_service.transferir(1, 2, "DEBITO", valor)
+
+        conta_repository_mock.buscar_por_id.assert_has_calls([
+            call(1),
+            call(2)
+        ])
+
+        conta_repository_mock.salvar_transferencia.assert_called_once()
+
+        assert resultado == conta_repository_mock.salvar_transferencia.return_value
+
+        conta_salva_origem, conta_salva_destino = (
+            conta_repository_mock.salvar_transferencia.call_args.args
+        )
+
+        assert conta_salva_origem.saldo == 100.00 - valor
+        assert conta_salva_origem.limite == 500.00
+
+        assert conta_salva_destino.saldo == 200.00 + valor
+        assert conta_salva_destino.limite == 1000.00
+
+
+@pytest.mark.parametrize(("valor"), [(10), (5)])
+def test_service_transferencia_credito_sucesso(valor):
+    conta_origem = Conta(100.00, 500.00)
+    conta_destino = Conta(200.00, 1000.00)
+
+    with patch(
+        "services.conta_service.conta_repository"
+    ) as conta_repository_mock:
+
+        conta_repository_mock.buscar_por_id.side_effect = [
+            {
+                "id": 1,
+                "saldo": conta_origem.saldo,
+                "limite": conta_origem.limite
+            },
+            {
+                "id": 2,
+                "saldo": conta_destino.saldo,
+                "limite": conta_destino.limite
+            }
+        ]
+
+        resultado = conta_service.transferir(1, 2, "CREDITO", valor)
+
+        conta_repository_mock.buscar_por_id.assert_has_calls([
+            call(1),
+            call(2)
+        ])
+
+        conta_repository_mock.salvar_transferencia.assert_called_once()
+
+        assert resultado == conta_repository_mock.salvar_transferencia.return_value
+
+        conta_salva_origem, conta_salva_destino = (
+            conta_repository_mock.salvar_transferencia.call_args.args
+        )
+
+        assert conta_salva_origem.saldo == 100.00 
+        assert conta_salva_origem.limite == 500.00 - valor
+
+        assert conta_salva_destino.saldo == 200.00 + valor
+        assert conta_salva_destino.limite == 1000.00
