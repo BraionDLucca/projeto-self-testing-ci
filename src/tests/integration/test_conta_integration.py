@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch
 from services import conta_service
-from integration.conftest import obter_conexao_teste
+from conftest import obter_conexao_teste
 
 
 def test_buscar_por_id_sucesso(test_db):
