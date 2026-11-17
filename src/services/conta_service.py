@@ -15,6 +15,8 @@ def criar_conta(saldo: float, limite: float):
 
     return conta_repository.salvar(conta)
 
+def buscar_por_id(id):
+    pass
 
 def transferir(id_conta_origem, id_conta_destino, metodo, valor):
 
