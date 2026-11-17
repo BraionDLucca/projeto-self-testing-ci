@@ -1,11 +1,10 @@
-from fastapi import FastAPI, APIRouter
-import uvicorn, os, sqlite3
+from fastapi import FastAPI
+import uvicorn, os
 from dotenv import load_dotenv
+from controllers.conta_controller import router
 
 # FastAPI setup
 app = FastAPI()
-
-router = APIRouter()
 
 app.include_router(router)
 

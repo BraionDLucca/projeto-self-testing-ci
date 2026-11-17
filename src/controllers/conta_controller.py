@@ -1,12 +1,14 @@
 from fastapi import HTTPException
 from services import conta_service
 from schemas.conta_schema import CriarContaRequest
-from main import router
+from fastapi import APIRouter
+
+router = APIRouter()
 
 
 @router.get("/")
 def home():
-    return "API funcionando na porta 8000!"
+    return "API funcionando!"
 
 
 @router.post("/contas")
