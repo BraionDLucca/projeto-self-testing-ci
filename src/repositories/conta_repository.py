@@ -1,10 +1,21 @@
-from main import conexao, cursor
+from database.conexao import obter_conexao
 
 def salvar(conta):
     pass
 
 
 def buscar_por_id(id):
-    cursor.execute("SELECT * FROM contas WHERE id = ?", (id))
+    conexao = obter_conexao()
 
-    return cursor.fetchone()
+    try:
+        cursor = conexao.cursor()
+
+        cursor.execute(
+            "SELECT * FROM contas WHERE id = ?",
+            (id)
+        )
+
+        return cursor.fetchone()
+
+    finally:
+        conexao.close()

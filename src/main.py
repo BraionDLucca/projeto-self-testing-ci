@@ -2,18 +2,6 @@ from fastapi import FastAPI, APIRouter
 import uvicorn, os, sqlite3
 from dotenv import load_dotenv
 
-# SQLite3 setup
-conexao = sqlite3.connect("database/banco.db")
-cursor = conexao.cursor()
-
-cursor.execute("""
-        CREATE TABLE IF NOT EXISTS contas (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            saldo REAL NOT NULL,
-            limite REAL NOT NULL
-        )
-    """)
-
 # FastAPI setup
 app = FastAPI()
 

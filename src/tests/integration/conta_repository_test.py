@@ -10,16 +10,20 @@ def test_buscar_por_id():
     }
 
     with patch(
-        "repositories.conta_repository.cursor"
-    ) as cursor_mock:
+        "repositories.conta_repository.obter_conexao"
+    ) as conexao_mock:
 
-        cursor_mock.fetchone.return_value = resultado_esperado
+        conexao_mock.return_value.cursor.return_value.fetchone.return_value = resultado_esperado
 
         resultado = conta_repository.buscar_por_id(1)
 
         assert resultado == resultado_esperado
 
-        cursor_mock.execute.assert_called_once_with(
+        conexao_mock.return_value.cursor.return_value.execute.assert_called_once_with(
             "SELECT * FROM contas WHERE id = ?",
             (1)
         )
+
+        conexao_mock.return_value.cursor.return_value.fetchone.assert_called_once()
+
+        conexao_mock.return_value.close.assert_called_once()
