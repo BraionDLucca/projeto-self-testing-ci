@@ -3,8 +3,9 @@ from repositories import conta_repository
 
 
 def test_repository_salvar():
-    
-    conta = {
+
+    resultado_esperado = {
+        "id": 1,
         "saldo": 80.50,
         "limite": 500.00
         }
@@ -12,17 +13,19 @@ def test_repository_salvar():
     with patch(
         "repositories.conta_repository.obter_conexao"
     ) as conexao_mock:
+        
+        conexao_mock.return_value.cursor.return_value.lastrowid = 1
+        
+        resultado = conta_repository.salvar(resultado_esperado)      
 
-        resultado = conta_repository.salvar(conta)
-
-        assert resultado == conta
+        assert resultado == resultado_esperado
 
         conexao_mock.return_value.cursor.return_value.execute.assert_called_once_with(
             "INSERT INTO contas (saldo, limite) VALUES (?, ?)",
-            (conta["saldo"], conta["limite"])
+            (resultado_esperado["saldo"], resultado_esperado["limite"])
         )
 
-        conexao_mock.return_value.commit.assert_called_once()
+        conexao_mock.return_value.commit.assert_called_once()      
 
         conexao_mock.return_value.close.assert_called_once()
 
@@ -38,7 +41,9 @@ def test_buscar_por_id():
         "repositories.conta_repository.obter_conexao"
     ) as conexao_mock:
 
-        conexao_mock.return_value.cursor.return_value.fetchone.return_value = resultado_esperado
+        conexao_mock.return_value.cursor.return_value.fetchone.return_value = (
+            resultado_esperado
+            )
 
         resultado = conta_repository.buscar_por_id(1)
 

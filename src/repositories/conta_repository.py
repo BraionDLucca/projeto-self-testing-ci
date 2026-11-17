@@ -14,7 +14,10 @@ def salvar(conta):
 
         conexao.commit()
 
-        return conta
+        return {
+            "id": cursor.lastrowid,
+            **conta
+            }
 
     finally:
         conexao.close()
