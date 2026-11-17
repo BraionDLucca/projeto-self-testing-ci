@@ -38,3 +38,7 @@ def buscar_por_id(id):
 
     finally:
         conexao.close()
+
+
+def salvar_transferencia(conta_origem, conta_destino):
+    pass
