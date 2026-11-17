@@ -6,13 +6,13 @@ class Conta():
     def transferir(self, valor: float, metodo: str):
 
         if metodo == "CREDITO":
-            if valor > self.limite:
+            if self.limite - valor < 0:
                 raise ValueError("Limite insuficiente.")
             else:
                 self.limite = self.limite - valor
 
         if metodo == "DEBITO":
-            if valor > self.saldo:
+            if self.saldo - valor < 0:
                 raise ValueError("Saldo insuficiente.")
             else:
                 self.saldo = self.saldo - valor
