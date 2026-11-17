@@ -40,4 +40,6 @@ def transferir(id_conta_origem, id_conta_destino, metodo, valor):
 
     conta_destino.receber(valor)
 
-    return conta_repository.salvar_transferencia(conta_origem, conta_destino)
+    return conta_repository.salvar_transferencia(
+        id_conta_origem, conta_origem, id_conta_destino, conta_destino
+        )

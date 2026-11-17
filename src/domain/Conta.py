@@ -19,3 +19,9 @@ class Conta():
 
     def receber(self, valor: float):
         self.saldo += valor
+
+    def get_saldo(self):
+        return self.saldo
+
+    def get_limite(self):
+        return self.limite

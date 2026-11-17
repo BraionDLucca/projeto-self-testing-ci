@@ -76,9 +76,12 @@ def test_service_transferencia_debito_sucesso(valor):
 
         assert resultado == conta_repository_mock.salvar_transferencia.return_value
 
-        conta_salva_origem, conta_salva_destino = (
+        id_origem, conta_salva_origem, id_destino, conta_salva_destino = (
             conta_repository_mock.salvar_transferencia.call_args.args
         )
+
+        assert id_origem == 1
+        assert id_destino == 2
 
         assert conta_salva_origem.saldo == 100.00 - valor
         assert conta_salva_origem.limite == 500.00
@@ -120,9 +123,12 @@ def test_service_transferencia_credito_sucesso(valor):
 
         assert resultado == conta_repository_mock.salvar_transferencia.return_value
 
-        conta_salva_origem, conta_salva_destino = (
+        id_origem, conta_salva_origem, id_destino, conta_salva_destino = (
             conta_repository_mock.salvar_transferencia.call_args.args
         )
+
+        assert id_origem == 1
+        assert id_destino == 2
 
         assert conta_salva_origem.saldo == 100.00 
         assert conta_salva_origem.limite == 500.00 - valor
