@@ -61,6 +61,21 @@ def test_buscar_por_id_sucesso():
         conta_repository_mock.buscar_por_id.assert_called_once_with(1)
 
 
+def test_buscar_por_id_conta_nao_encontrada():
+    with patch(
+        "services.conta_service.conta_repository"
+    ) as conta_repository_mock:
+
+        conta_repository_mock.buscar_por_id.return_value = None
+
+        with pytest.raises(ValueError) as erro:
+            conta_service.buscar_por_id(999)
+
+        assert str(erro.value) == "Conta não encontrada."
+
+        conta_repository_mock.buscar_por_id.assert_called_once_with(999)
+
+
 @pytest.mark.parametrize(("valor"), [(10), (5)])
 def test_service_transferencia_debito_sucesso(valor):
     conta_origem = Conta(100.00, 500.00)
