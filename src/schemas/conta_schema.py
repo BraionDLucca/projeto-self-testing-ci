@@ -9,4 +9,5 @@ class CriarContaRequest(BaseModel):
 class TransferenciaRequest(BaseModel):
     id_conta_origem: int
     id_conta_destino: int
+    metodo: str
     valor: float

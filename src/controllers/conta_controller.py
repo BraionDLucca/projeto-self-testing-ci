@@ -25,6 +25,7 @@ def transferir(dados: TransferenciaRequest):
         return conta_service.transferir(
             dados.id_conta_origem,
             dados.id_conta_destino,
+            dados.metodo,
             dados.valor
             )
     except ValueError as erro:

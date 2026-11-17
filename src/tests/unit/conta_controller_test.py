@@ -35,12 +35,14 @@ def test_controller_transferencia_sucesso():
         conta_service_mock.transferir.return_value = {
             "id_conta_origem": 1,
             "id_conta_destino": 2,
+            "metodo":"DEBITO",
             "valor": 500.00
         }
 
         dados = TransferenciaRequest(
                     id_conta_origem=1,
                     id_conta_destino=2,
+                    metodo="DEBITO",
                     valor=500.00
                     )
 
@@ -48,8 +50,9 @@ def test_controller_transferencia_sucesso():
 
         assert resultado["id_conta_origem"] == 1
         assert resultado["id_conta_destino"] == 2
+        assert resultado["metodo"] == "DEBITO"
         assert resultado["valor"] == 500.00
 
         conta_service_mock.transferir.assert_called_once_with(
-            1, 2, 500.00
+            1, 2, "DEBITO", 500.00
         )
