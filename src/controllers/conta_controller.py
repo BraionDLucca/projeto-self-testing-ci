@@ -1,8 +1,7 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import HTTPException
 from services import conta_service
 from schemas.conta_schema import CriarContaRequest
-
-router = APIRouter()
+from main import router
 
 
 @router.get("/")

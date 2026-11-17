@@ -1,17 +1,32 @@
-from fastapi import FastAPI
-import uvicorn
+from fastapi import FastAPI, APIRouter
+import uvicorn, os, sqlite3
 from dotenv import load_dotenv
-import os
-from controllers.conta_controller import router
 
+# SQLite3 setup
+conexao = sqlite3.connect("database/banco.db")
+cursor = conexao.cursor()
+
+cursor.execute("""
+        CREATE TABLE IF NOT EXISTS contas (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            saldo REAL NOT NULL,
+            limite REAL NOT NULL
+        )
+    """)
+
+# FastAPI setup
 app = FastAPI()
+
+router = APIRouter()
 
 app.include_router(router)
 
+# Carregamento de variáveis .env (ou valores padrão se não houver)
 load_dotenv()
 
 API_HOST = os.getenv("API_HOST", "localhost")
 API_PORT = int(os.getenv("API_PORT", "8001"))
 
+# Execução da API
 if __name__ == "__main__":
     uvicorn.run(app, host=API_HOST, port=API_PORT)
