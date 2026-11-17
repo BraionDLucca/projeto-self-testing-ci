@@ -1,7 +1,23 @@
 from database.conexao import obter_conexao
 
+
 def salvar(conta):
-    pass
+    conexao = obter_conexao()
+
+    try:
+        cursor = conexao.cursor()
+
+        cursor.execute(
+            "INSERT INTO contas (saldo, limite) VALUES (?, ?)",
+            (conta["saldo"], conta["limite"])
+        )
+
+        conexao.commit()
+
+        return conta
+
+    finally:
+        conexao.close()
 
 
 def buscar_por_id(id):

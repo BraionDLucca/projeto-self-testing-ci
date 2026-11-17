@@ -2,6 +2,10 @@ from fastapi import FastAPI
 import uvicorn, os
 from dotenv import load_dotenv
 from controllers.conta_controller import router
+from database.conexao import inicializar_banco
+
+# Inicialização do banco SQLite3
+inicializar_banco()
 
 # FastAPI setup
 app = FastAPI()
