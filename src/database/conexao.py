@@ -1,9 +1,11 @@
 import sqlite3
 
+
 def obter_conexao():
     conexao = sqlite3.connect("database/banco.db")
     conexao.row_factory = sqlite3.Row
     return conexao
+
 
 def inicializar_banco():
     conexao = obter_conexao()

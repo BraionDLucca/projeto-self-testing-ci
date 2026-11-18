@@ -40,7 +40,12 @@ def buscar_por_id(id):
         conexao.close()
 
 
-def salvar_transferencia(id_conta_origem, conta_origem, id_conta_destino, conta_destino):
+def salvar_transferencia(
+            id_conta_origem,
+            conta_origem,
+            id_conta_destino,
+            conta_destino
+        ):
     conexao = obter_conexao()
 
     try:
@@ -57,7 +62,7 @@ def salvar_transferencia(id_conta_origem, conta_origem, id_conta_destino, conta_
         )
 
         conexao.commit()
-        
+
         conta_origem_salva = buscar_por_id(id_conta_origem)
         conta_destino_salva = buscar_por_id(id_conta_destino)
 

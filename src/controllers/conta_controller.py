@@ -10,12 +10,14 @@ router = APIRouter()
 def home():
     return "API funcionando!"
 
+
 @router.get("/contas/{id}")
 def buscar_conta_por_id(id: int):
     try:
         return conta_service.buscar_por_id(id)
     except ValueError as erro:
         raise HTTPException(status_code=404, detail=str(erro))
+
 
 @router.post("/contas")
 def criar_conta(dados: CriarContaRequest):

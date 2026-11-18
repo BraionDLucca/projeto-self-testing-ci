@@ -163,7 +163,7 @@ def test_service_transferencia_credito_sucesso(valor):
         assert id_origem == 1
         assert id_destino == 2
 
-        assert conta_salva_origem.saldo == 100.00 
+        assert conta_salva_origem.saldo == 100.00
         assert conta_salva_origem.limite == 500.00 - valor
 
         assert conta_salva_destino.saldo == 200.00 + valor

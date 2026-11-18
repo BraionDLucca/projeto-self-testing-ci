@@ -37,7 +37,7 @@ def test_controller_transferencia_sucesso():
         conta_service_mock.transferir.return_value = {
             "id_conta_origem": 1,
             "id_conta_destino": 2,
-            "metodo":"DEBITO",
+            "metodo": "DEBITO",
             "valor": 500.00
         }
 
@@ -58,6 +58,7 @@ def test_controller_transferencia_sucesso():
         conta_service_mock.transferir.assert_called_once_with(
             1, 2, "DEBITO", 500.00
         )
+
 
 def test_controller_buscar_conta_por_id_sucesso():
     with patch(

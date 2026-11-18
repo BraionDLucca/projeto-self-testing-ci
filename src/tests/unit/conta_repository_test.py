@@ -14,10 +14,10 @@ def test_repository_salvar():
     with patch(
         "repositories.conta_repository.obter_conexao"
     ) as conexao_mock:
-        
+
         conexao_mock.return_value.cursor.return_value.lastrowid = 1
-        
-        resultado = conta_repository.salvar(resultado_esperado)      
+
+        resultado = conta_repository.salvar(resultado_esperado)
 
         assert resultado == resultado_esperado
 
@@ -26,7 +26,7 @@ def test_repository_salvar():
             (resultado_esperado["saldo"], resultado_esperado["limite"])
         )
 
-        conexao_mock.return_value.commit.assert_called_once()      
+        conexao_mock.return_value.commit.assert_called_once()
 
         conexao_mock.return_value.close.assert_called_once()
 
