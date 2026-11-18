@@ -69,3 +69,26 @@ def test_transferir_e_verificar_no_banco(test_db):
 
     assert contas[0]["saldo"] == 70.00
     assert contas[1]["saldo"] == 80.00
+
+
+
+def test_transferir_saldo_insuficiente_sem_alterar_banco(test_db):
+    with patch(
+        "repositories.conta_repository.obter_conexao",
+        side_effect=obter_conexao_teste
+    ):
+        conta_service.criar_conta(20.00, 500.00)
+        conta_service.criar_conta(50.00, 500.00)
+
+        with pytest.raises(ValueError) as erro:
+            conta_service.transferir(1, 2, "DEBITO", 100.00)
+
+    assert str(erro.value) == "Saldo insuficiente."
+
+    cursor = test_db.execute(
+        "SELECT * FROM contas ORDER BY id"
+    )
+    contas = cursor.fetchall()
+
+    assert contas[0]["saldo"] == 20.00
+    assert contas[1]["saldo"] == 50.00
