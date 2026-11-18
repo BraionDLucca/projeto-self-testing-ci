@@ -42,3 +42,21 @@ def test_api_funcionando(client):
 
     assert resposta.status_code == 200
     assert resposta.json() == "API funcionando!"
+
+
+def test_criar_conta(client):
+    resposta = client.post(
+        "/contas",
+        json={
+            "saldo": 100.00,
+            "limite": 500.00
+        }
+    )
+
+    assert resposta.status_code == 200
+
+    dados = resposta.json()
+
+    assert dados["id"] is not None
+    assert dados["saldo"] == 100.00
+    assert dados["limite"] == 500.00
