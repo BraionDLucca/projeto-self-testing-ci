@@ -71,7 +71,6 @@ def test_transferir_e_verificar_no_banco(test_db):
     assert contas[1]["saldo"] == 80.00
 
 
-
 def test_transferir_saldo_insuficiente_sem_alterar_banco(test_db):
     with patch(
         "repositories.conta_repository.obter_conexao",
@@ -92,3 +91,24 @@ def test_transferir_saldo_insuficiente_sem_alterar_banco(test_db):
 
     assert contas[0]["saldo"] == 20.00
     assert contas[1]["saldo"] == 50.00
+
+
+def test_transferir_para_mesma_conta(test_db):
+    with patch(
+        "repositories.conta_repository.obter_conexao",
+        side_effect=obter_conexao_teste
+    ):
+        conta_service.criar_conta(100.00, 500.00)
+
+        with pytest.raises(ValueError) as erro:
+            conta_service.transferir(1, 1, "DEBITO", 30.00)
+
+    assert str(erro.value) == (
+        "Transferências não podem ser feitas para a mesma conta."
+    )
+
+    cursor = test_db.execute(
+        "SELECT saldo FROM contas WHERE id = 1"
+    )
+
+    assert cursor.fetchone()["saldo"] == 100.00
