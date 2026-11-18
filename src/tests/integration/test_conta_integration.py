@@ -112,3 +112,28 @@ def test_transferir_para_mesma_conta(test_db):
     )
 
     assert cursor.fetchone()["saldo"] == 100.00
+
+
+@pytest.mark.parametrize("valor", [0, -10])
+def test_transferir_com_valor_invalido(test_db, valor):
+    with patch(
+        "repositories.conta_repository.obter_conexao",
+        side_effect=obter_conexao_teste
+    ):
+        conta_service.criar_conta(100.00, 500.00)
+        conta_service.criar_conta(50.00, 500.00)
+
+        with pytest.raises(ValueError) as erro:
+            conta_service.transferir(1, 2, "DEBITO", valor)
+
+    assert str(erro.value) == (
+        "Valor de transferência deve ser acima de 0 (zero)."
+    )
+
+    cursor = test_db.execute(
+        "SELECT saldo FROM contas ORDER BY id"
+    )
+    contas = cursor.fetchall()
+
+    assert contas[0]["saldo"] == 100.00
+    assert contas[1]["saldo"] == 50.00
