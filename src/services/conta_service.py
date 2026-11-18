@@ -45,9 +45,9 @@ def transferir(id_conta_origem, id_conta_destino, metodo, valor):
 
     dados_conta_destino = conta_repository.buscar_por_id(id_conta_destino)
 
-    conta_origem = Conta(dados_conta_origem["saldo"], dados_conta_origem["limite"])
+    conta_origem = Conta(dados_conta_origem[1], dados_conta_origem[2])
 
-    conta_destino = Conta(dados_conta_destino["saldo"], dados_conta_destino["limite"])
+    conta_destino = Conta(dados_conta_destino[1], dados_conta_destino[2])
 
     conta_origem.transferir(valor, metodo)
 
