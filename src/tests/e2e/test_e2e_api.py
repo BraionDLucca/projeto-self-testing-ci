@@ -60,3 +60,26 @@ def test_criar_conta(client):
     assert dados["id"] is not None
     assert dados["saldo"] == 100.00
     assert dados["limite"] == 500.00
+
+
+def test_buscar_conta_existente(client):
+    criacao = client.post(
+        "/contas",
+        json={
+            "saldo": 100.00,
+            "limite": 500.00
+        }
+    )
+
+    id_conta = criacao.json()["id"]
+
+    resposta = client.get(f"/contas/{id_conta}")
+
+    assert resposta.status_code == 200
+    assert resposta.json()["id"] == id_conta
+
+
+def test_buscar_conta_inexistente(client):
+    resposta = client.get("/contas/999")
+
+    assert resposta.status_code == 404
